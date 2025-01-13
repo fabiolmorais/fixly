@@ -2,9 +2,7 @@ package com.projetomaisprati.fixly.entities;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -21,6 +19,9 @@ public class Usuario {
 
     @OneToMany(mappedBy = "usuario")
     private List<Avaliacao> avaliacoes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<Endereco> enderecos = new HashSet<>();
 
     public Usuario() {
     }
@@ -75,6 +76,10 @@ public class Usuario {
 
     public List<Avaliacao> getAvaliacoes() {
         return avaliacoes;
+    }
+
+    public Set<Endereco> getEnderecos() {
+        return enderecos;
     }
 
     @Override
