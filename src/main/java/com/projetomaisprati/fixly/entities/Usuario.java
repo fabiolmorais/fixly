@@ -23,6 +23,12 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private Set<Endereco> enderecos = new HashSet<>();
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Solicitacao> solicitacoes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<Servico> servicos = new HashSet<>();
+
     public Usuario() {
     }
 
@@ -80,6 +86,14 @@ public class Usuario {
 
     public Set<Endereco> getEnderecos() {
         return enderecos;
+    }
+
+    public List<Solicitacao> getSolicitacoes() {
+        return solicitacoes;
+    }
+
+    public Set<Servico> getServicos() {
+        return servicos;
     }
 
     @Override
