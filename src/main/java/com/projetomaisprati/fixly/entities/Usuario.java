@@ -1,14 +1,26 @@
 package com.projetomaisprati.fixly.entities;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_usuario")
 public class Usuario {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    @Column(unique = true)
     private String email;
     private String senha;
     private TipoUsuario tipo;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Avaliacao> avaliacoes = new ArrayList<>();
 
     public Usuario() {
     }
@@ -59,6 +71,10 @@ public class Usuario {
 
     public void setTipo(TipoUsuario tipo) {
         this.tipo = tipo;
+    }
+
+    public List<Avaliacao> getAvaliacoes() {
+        return avaliacoes;
     }
 
     @Override
