@@ -21,19 +21,24 @@ public class Avaliacao {
     private Instant atualizadoEm;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "avaliador_id")
+    private Usuario avaliador;
+
+    @ManyToOne
+    @JoinColumn(name = "avaliado_id")
+    private Usuario avaliado;
 
     public Avaliacao() {
     }
 
-    public Avaliacao(Long id, Integer nota, String comentario, Instant criadoEm, Instant atualizadoEm, Usuario usuario) {
+    public Avaliacao(Long id, Integer nota, String comentario, Instant criadoEm, Instant atualizadoEm, Usuario avaliador, Usuario avaliado) {
         this.id = id;
         this.nota = nota;
         this.comentario = comentario;
         this.criadoEm = criadoEm;
         this.atualizadoEm = atualizadoEm;
-        this.usuario = usuario;
+        this.avaliador = avaliador;
+        this.avaliado = avaliado;
     }
 
     public Long getId() {
@@ -76,12 +81,20 @@ public class Avaliacao {
         this.atualizadoEm = atualizadoEm;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Usuario getAvaliador() {
+        return avaliador;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setAvaliador(Usuario avaliador) {
+        this.avaliador = avaliador;
+    }
+
+    public Usuario getAvaliado() {
+        return avaliado;
+    }
+
+    public void setAvaliado(Usuario avaliado) {
+        this.avaliado = avaliado;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.projetomaisprati.fixly.entities;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.*;
 
 @Entity
@@ -16,28 +17,47 @@ public class Usuario {
     private String email;
     private String senha;
     private TipoUsuario tipo;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Avaliacao> avaliacoes = new ArrayList<>();
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant dataCriacao;
 
     @OneToMany(mappedBy = "usuario")
     private Set<Endereco> enderecos = new HashSet<>();
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Solicitacao> solicitacoes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "prestador")
     private Set<Servico> servicos = new HashSet<>();
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Orcamento> orcamentosCliente = new ArrayList<>();
+
+    @OneToMany(mappedBy = "prestador")
+    private List<Orcamento> orcamentosPrestador = new ArrayList<>();
+
+    @OneToMany(mappedBy = "avaliador")
+    private List<Avaliacao> avaliacoesAvaliador = new ArrayList<>();
+
+    @OneToMany(mappedBy = "avaliado")
+    private List<Avaliacao> avaliacoesAvaliado = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Chat> chatsCliente = new ArrayList<>();
+
+    @OneToMany(mappedBy = "prestador")
+    private List<Chat> chatsPrestador = new ArrayList<>();
+
+    @OneToMany(mappedBy = "remetente")
+    private List<Mensagem> mensagems = new ArrayList<>();
+
 
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String senha, TipoUsuario tipo) {
+    public Usuario(Long id, String nome, String email, String senha, TipoUsuario tipo, Instant dataCriacao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.tipo = tipo;
+        this.dataCriacao = dataCriacao;
     }
 
     public Long getId() {
@@ -80,20 +100,48 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public List<Avaliacao> getAvaliacoes() {
-        return avaliacoes;
+    public Instant getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Instant dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public List<Orcamento> getOrcamentosCliente() {
+        return orcamentosCliente;
+    }
+
+    public List<Orcamento> getOrcamentosPrestador() {
+        return orcamentosPrestador;
+    }
+
+    public List<Avaliacao> getAvaliacoesAvaliador() {
+        return avaliacoesAvaliador;
+    }
+
+    public List<Avaliacao> getAvaliacoesAvaliado() {
+        return avaliacoesAvaliado;
     }
 
     public Set<Endereco> getEnderecos() {
         return enderecos;
     }
 
-    public List<Solicitacao> getSolicitacoes() {
-        return solicitacoes;
-    }
-
     public Set<Servico> getServicos() {
         return servicos;
+    }
+
+    public List<Chat> getChatsCliente() {
+        return chatsCliente;
+    }
+
+    public List<Chat> getChatsPrestador() {
+        return chatsPrestador;
+    }
+
+    public List<Mensagem> getMensagems() {
+        return mensagems;
     }
 
     @Override

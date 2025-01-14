@@ -2,6 +2,8 @@ package com.projetomaisprati.fixly.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,15 +20,19 @@ public class Endereco {
     private String cidade;
     private String estado;
     private String cep;
+    private Boolean principal;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @OneToMany(mappedBy = "endereco")
+    private List<Orcamento> orcamentos = new ArrayList<>();
+
     public Endereco() {
     }
 
-    public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, Usuario usuario) {
+    public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, Usuario usuario, Boolean principal) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -36,6 +42,7 @@ public class Endereco {
         this.estado = estado;
         this.cep = cep;
         this.usuario = usuario;
+        this.principal = principal;
     }
 
     public Long getId() {
@@ -50,7 +57,7 @@ public class Endereco {
         return logradouro;
     }
 
-    public void setLogadouro(String logradouro) {
+    public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
     }
 
@@ -108,6 +115,18 @@ public class Endereco {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Boolean getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(Boolean principal) {
+        this.principal = principal;
+    }
+
+    public List<Orcamento> getOrcamentos() {
+        return orcamentos;
     }
 
     @Override

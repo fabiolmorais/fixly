@@ -16,26 +16,28 @@ public class Servico {
     private String nome;
     @Column(columnDefinition = "TEXT")
     private String descricao;
-    private String categoria;
-    private Double preco;
+    private Double precoMinimo;
+    private Double precoMaximo;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
-    @ManyToMany(mappedBy = "servicos")
-    private List<Solicitacao> solicitacoes = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "prestador_id")
+    private Usuario prestador;
 
     public Servico() {
     }
 
-    public Servico(Long id, String nome, String descricao, String categoria, Double preco, Usuario usuario) {
+    public Servico(Long id, String nome, String descricao, Categoria categoria, Double precoMinimo, Double precoMaximo, Usuario prestador) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.categoria = categoria;
-        this.preco = preco;
-        this.usuario = usuario;
+        this.precoMinimo = precoMinimo;
+        this.precoMaximo = precoMaximo;
+        this.prestador = prestador;
     }
 
     public Long getId() {
@@ -62,32 +64,36 @@ public class Servico {
         this.descricao = descricao;
     }
 
-    public String getCategoria() {
+    public Double getPrecoMinimo() {
+        return precoMinimo;
+    }
+
+    public void setPrecoMinimo(Double precoMinimo) {
+        this.precoMinimo = precoMinimo;
+    }
+
+    public Double getPrecoMaximo() {
+        return precoMaximo;
+    }
+
+    public void setPrecoMaximo(Double precoMaximo) {
+        this.precoMaximo = precoMaximo;
+    }
+
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
-    public Double getPreco() {
-        return preco;
+    public Usuario getPrestador() {
+        return prestador;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public List<Solicitacao> getSolicitacoes() {
-        return solicitacoes;
+    public void setPrestador(Usuario prestador) {
+        this.prestador = prestador;
     }
 
     @Override
