@@ -30,9 +30,12 @@ public class EnderecoDTO {
     private String cep;
     private Boolean principal;
 
-    private EnderecoUsuarioDTO enderecoUsuario;
+    private EnderecoUsuarioDTO usuario;
 
-    public EnderecoDTO(Long id, String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, Boolean principal, EnderecoUsuarioDTO enderecoUsuario) {
+    public EnderecoDTO() {
+    }
+
+    public EnderecoDTO(Long id, String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, EnderecoUsuarioDTO usuario, Boolean principal) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -41,8 +44,8 @@ public class EnderecoDTO {
         this.cidade = cidade;
         this.estado = estado;
         this.cep = cep;
+        this.usuario = usuario;
         this.principal = principal;
-        this.enderecoUsuario = enderecoUsuario;
     }
 
     public EnderecoDTO(Endereco entidade) {
@@ -54,47 +57,47 @@ public class EnderecoDTO {
         cidade = entidade.getCidade();
         estado = entidade.getEstado();
         cep = entidade.getCep();
+        usuario = (entidade.getUsuario() == null) ? null : new EnderecoUsuarioDTO(entidade.getUsuario());
         principal = entidade.getPrincipal();
-        enderecoUsuario = new EnderecoUsuarioDTO(entidade.getUsuario());
     }
 
     public Long getId() {
         return id;
     }
 
-    public @NotBlank(message = "Campo requerido") @NotEmpty(message = "Precisa ter o nome da rua") String getLogradouro() {
+    public String getLogradouro() {
         return logradouro;
     }
 
-    public @NotBlank(message = "Campo requerido") @NotEmpty(message = "Precisa ter o número da casa") String getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public @NotBlank(message = "Campo requerido") @Size(min = 2, message = "Nome do complemento precisa ter pelo menos 2 caracteres") String getComplemento() {
+    public String getComplemento() {
         return complemento;
     }
 
-    public @NotBlank(message = "Campo requerido") @Size(min = 2, message = "Nome do bairro precisa ter pelo menos 2 caracteres") String getBairro() {
+    public String getBairro() {
         return bairro;
     }
 
-    public @NotBlank(message = "Campo requerido") @Size(min = 2, message = "Nome da cidade precisa ter pelo menos 2 caracteres") String getCidade() {
+    public String getCidade() {
         return cidade;
     }
 
-    public @NotBlank(message = "Campo requerido") @Size(min = 2, max = 2, message = "Estado deve ter apenas sua sigla de 2 caracteres, exemplo: SP, GO, BA, PE") String getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public @NotBlank(message = "Campo requerido") String getCep() {
+    public String getCep() {
         return cep;
+    }
+
+    public EnderecoUsuarioDTO getUsuario() {
+        return usuario;
     }
 
     public Boolean getPrincipal() {
         return principal;
-    }
-
-    public EnderecoUsuarioDTO getEnderecoUsuario() {
-        return enderecoUsuario;
     }
 }

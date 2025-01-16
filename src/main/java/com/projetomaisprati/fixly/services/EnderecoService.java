@@ -27,4 +27,26 @@ public class EnderecoService {
         Page<Endereco> result = repository.findAll(pageable);
         return result.map(x -> new EnderecoDTO(x));
     }
+
+    @Transactional
+    public EnderecoDTO insert(EnderecoDTO dto) {
+        Endereco entidade = new Endereco();
+        copyDtoToEntity(dto, entidade);
+        entidade = repository.save(entidade);
+        return new EnderecoDTO(entidade);
+    }
+
+
+    private void copyDtoToEntity(EnderecoDTO dto, Endereco entidade) {
+
+        entidade.setLogradouro(dto.getLogradouro());
+        entidade.setNumero(dto.getNumero());
+        entidade.setComplemento(dto.getComplemento());
+        entidade.setBairro(dto.getBairro());
+        entidade.setCidade(dto.getCidade());
+        entidade.setEstado(dto.getEstado());
+        entidade.setCep(dto.getCep());
+        entidade.setPrincipal(dto.getPrincipal());
+
+    }
 }
