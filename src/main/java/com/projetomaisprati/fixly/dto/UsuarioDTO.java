@@ -23,6 +23,9 @@ public class UsuarioDTO {
     private TipoUsuario tipo;
     private Instant dataCriacao;
 
+    public UsuarioDTO() {
+    }
+
     public UsuarioDTO(Long id, String nome, String email, String senha, TipoUsuario tipo, Instant dataCriacao) {
         this.id = id;
         this.nome = nome;
