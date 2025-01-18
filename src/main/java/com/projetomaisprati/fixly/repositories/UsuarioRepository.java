@@ -1,9 +1,9 @@
 package com.projetomaisprati.fixly.repositories;
 
-import com.projetomaisprati.fixly.entities.Endereco;
+import com.projetomaisprati.fixly.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 }
