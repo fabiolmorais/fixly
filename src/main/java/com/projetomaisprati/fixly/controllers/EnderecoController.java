@@ -13,27 +13,27 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = "/enderecos")
+@RequestMapping(value = "/usuarios/{usuarioId}/enderecos")
 public class EnderecoController {
 
     @Autowired
     private EnderecoService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<EnderecoDTO> findById(@PathVariable Long id) {
-        EnderecoDTO dto = service.findById(id);
+    public ResponseEntity<EnderecoDTO> findById(@PathVariable Long usuarioId, @PathVariable Long id) {
+        EnderecoDTO dto = service.findById(id, usuarioId);
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public ResponseEntity<Page<EnderecoDTO>> findAll (Pageable pageable) {
-        Page<EnderecoDTO> dto = service.findAll(pageable);
+    public ResponseEntity<Page<EnderecoDTO>> findAdressByUser (@PathVariable Long usuarioId, Pageable pageable) {
+        Page<EnderecoDTO> dto = service.findAdressByUser(usuarioId, pageable);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<EnderecoDTO> insert(@Valid @RequestBody EnderecoDTO dto) {
-        dto = service.insert(dto);
+    public ResponseEntity<EnderecoDTO> insert(@PathVariable Long usuarioId, @Valid @RequestBody EnderecoDTO dto) {
+        dto = service.insert(usuarioId, dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);

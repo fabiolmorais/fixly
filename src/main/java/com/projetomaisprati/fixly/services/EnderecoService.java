@@ -2,7 +2,9 @@ package com.projetomaisprati.fixly.services;
 
 import com.projetomaisprati.fixly.dto.EnderecoDTO;
 import com.projetomaisprati.fixly.entities.Endereco;
+import com.projetomaisprati.fixly.entities.Usuario;
 import com.projetomaisprati.fixly.repositories.EnderecoRepository;
+import com.projetomaisprati.fixly.repositories.UsuarioRepository;
 import com.projetomaisprati.fixly.services.exceptions.DatabaseException;
 import com.projetomaisprati.fixly.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,10 +22,19 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository repository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @Transactional(readOnly = true)
-    public EnderecoDTO findById(Long id) {
-        Endereco endereco = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+    public EnderecoDTO findById(Long id, Long usuarioId) {
+        Endereco endereco = repository.findByIdAndUsuarioId(id, usuarioId).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
         return new EnderecoDTO(endereco);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<EnderecoDTO> findAdressByUser(Long usuarioId, Pageable pageable) {
+        Page<Endereco> result = repository.findByUsuarioId(usuarioId, pageable);
+        return result.map(EnderecoDTO::new); // igual isso -> result.map(x -> new EnderecoDTO(x));
     }
 
     @Transactional(readOnly = true)
@@ -33,15 +44,27 @@ public class EnderecoService {
     }
 
     @Transactional
-    public EnderecoDTO insert(EnderecoDTO dto) {
+    public EnderecoDTO insert(Long usuarioId, EnderecoDTO dto) {
+        Usuario usuario = usuarioRepository.getReferenceById(usuarioId);
+
+        if (dto.getPrincipal() == Boolean.TRUE) {
+            desmarcarEnderecoPrincipal(usuarioId);
+        }
+
         Endereco entidade = new Endereco();
         copyDtoToEntity(dto, entidade);
+        entidade.setUsuario(usuario);
         entidade = repository.save(entidade);
         return new EnderecoDTO(entidade);
     }
 
     @Transactional
     public EnderecoDTO update(Long id, EnderecoDTO dto) {
+
+        if (dto.getPrincipal() == Boolean.TRUE) {
+            desmarcarEnderecoPrincipal(dto.getUsuario().getId());
+        }
+
         try {
             Endereco entidade = repository.getReferenceById(id);
             copyDtoToEntity(dto, entidade);
@@ -76,5 +99,9 @@ public class EnderecoService {
         entidade.setCep(dto.getCep());
         entidade.setPrincipal(dto.getPrincipal());
 
+    }
+
+    private void desmarcarEnderecoPrincipal(Long usuarioId) {
+        repository.desmarcarEnderecoPrincipalPorUsuario(usuarioId);
     }
 }
