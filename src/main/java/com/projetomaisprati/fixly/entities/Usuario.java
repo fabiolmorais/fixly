@@ -17,6 +17,7 @@ public class Usuario {
     private String email;
     private String senha;
     private TipoUsuario tipo;
+    private Double avaliacaoMedia;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant dataCriacao;
 
@@ -98,6 +99,14 @@ public class Usuario {
 
     public void setTipo(TipoUsuario tipo) {
         this.tipo = tipo;
+    }
+
+    public Double getAvaliacaoMedia() {
+        return avaliacaoMedia;
+    }
+
+    public void setAvaliacaoMedia(Double avaliacaoMedia) {
+        this.avaliacaoMedia = avaliacaoMedia;
     }
 
     public Instant getDataCriacao() {

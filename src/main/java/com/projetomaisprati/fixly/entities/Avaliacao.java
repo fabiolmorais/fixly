@@ -1,6 +1,9 @@
 package com.projetomaisprati.fixly.entities;
 
+import com.projetomaisprati.fixly.services.AvaliacaoService;
 import jakarta.persistence.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -108,5 +111,17 @@ public class Avaliacao {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Transient
+    @Autowired
+    private transient ApplicationContext applicationContext;
+
+    @PostPersist
+    @PostUpdate
+    @PostRemove
+    private void updateAverageRating() {
+        AvaliacaoService avaliacaoService = applicationContext.getBean(AvaliacaoService.class);
+        avaliacaoService.updateAverageRating(this.avaliado);
     }
 }
