@@ -20,6 +20,7 @@ public class ServicoDTO {
 
     private Double precoMaximo;
 
+    @NotEmpty(message = "Deve ter pelo menos uma categoria")
     private CategoriaDTO categoria;
 
     public ServicoDTO() {
