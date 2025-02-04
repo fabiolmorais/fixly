@@ -24,9 +24,6 @@ public class AvaliacaoService {
     @Autowired
     private AvaliacaoRepository avaliacaoRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
     @Transactional(readOnly = true)
     public AvaliacaoDTO findByPrestadorId(Long id, Long prestadorId) {
         Avaliacao avaliacao = avaliacaoRepository.findByIdAndAvaliadoId(id, prestadorId).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
