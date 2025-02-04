@@ -17,22 +17,17 @@ public class PrestadorController {
     @Autowired
     private PrestadorService prestadorService;
 
-    @GetMapping("/prestadores/{cidade}")
+    @GetMapping("/buscar")
     public ResponseEntity<Page<PrestadorDTO>> findPrestadoresByCidade(
-            @PathVariable String cidade,
-            @RequestParam(value = "categoria", required = false) Long categoriaId,
-            @RequestParam(value = "precoMin", required = false) Double precoMin,
-            @RequestParam(value = "precoMax", required = false) Double precoMax,
-            @RequestParam(value = "avaliacao", required = false) Double avaliacao,
+            @RequestParam("cidade") String cidade,
             Pageable pageable) {
-        Page<PrestadorDTO> dto = prestadorService.findPrestadoresByCidade(
-                TipoUsuario.PRESTADOR, cidade, categoriaId, precoMin, precoMax, avaliacao, pageable);
+        Page<PrestadorDTO> dto = prestadorService.findPrestadoresByCity(cidade, pageable);
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/prestadores/{id}")
-    public ResponseEntity<PrestadorDetalhadoDTO> findPrestadorById(@PathVariable Long id) {
-        PrestadorDetalhadoDTO dto = prestadorService.findPrestadorById(id, TipoUsuario.PRESTADOR);
-        return ResponseEntity.ok(dto);
-    }
+//    @GetMapping("/prestadores/{id}")
+//    public ResponseEntity<PrestadorDetalhadoDTO> findPrestadorById(@PathVariable Long id) {
+//        PrestadorDetalhadoDTO dto = prestadorService.findPrestadorById(id, TipoUsuario.PRESTADOR);
+//        return ResponseEntity.ok(dto);
+//    }
 }

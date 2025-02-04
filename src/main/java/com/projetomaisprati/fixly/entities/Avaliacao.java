@@ -112,16 +112,4 @@ public class Avaliacao {
     public int hashCode() {
         return Objects.hashCode(id);
     }
-
-    @Transient
-    @Autowired
-    private transient ApplicationContext applicationContext;
-
-    @PostPersist
-    @PostUpdate
-    @PostRemove
-    private void updateAverageRating() {
-        AvaliacaoService avaliacaoService = applicationContext.getBean(AvaliacaoService.class);
-        avaliacaoService.updateAverageRating(this.avaliado);
-    }
 }

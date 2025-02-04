@@ -1,22 +1,30 @@
 package com.projetomaisprati.fixly.dto;
 
 import com.projetomaisprati.fixly.entities.Avaliacao;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.time.Instant;
 
 public class AvaliacaoDTO {
     private Long id;
+    @Min(value = 1, message = "Nota mínima é 1")
+    @Max(value = 5, message = "Nota máxima é 5")
     private Integer nota;
+    @NotBlank(message = "Campo requerido")
+    @NotEmpty(message = "Precisa ter um comentário")
     private String comentario;
     private Instant criadoEm;
     private Instant atualizadoEm;
-    private UsuarioDTO avaliador;
-    private UsuarioDTO avaliado;
+    private UsuarioMinDTO avaliador;
+    private UsuarioMinDTO avaliado;
 
     public AvaliacaoDTO() {
     }
 
-    public AvaliacaoDTO(Long id, Integer nota, String comentario, Instant criadoEm, Instant atualizadoEm, UsuarioDTO avaliador, UsuarioDTO avaliado) {
+    public AvaliacaoDTO(Long id, Integer nota, String comentario, Instant criadoEm, Instant atualizadoEm, UsuarioMinDTO avaliador, UsuarioMinDTO avaliado) {
         this.id = id;
         this.nota = nota;
         this.comentario = comentario;
@@ -32,8 +40,8 @@ public class AvaliacaoDTO {
         comentario = entidade.getComentario();
         criadoEm = entidade.getCriadoEm();
         atualizadoEm = entidade.getAtualizadoEm();
-        avaliador = (entidade.getAvaliador() == null) ? null : new UsuarioDTO(entidade.getAvaliador());
-        avaliado = (entidade.getAvaliado() == null) ? null : new UsuarioDTO(entidade.getAvaliado());
+        avaliador = (entidade.getAvaliador() == null) ? null : new UsuarioMinDTO(entidade.getAvaliador());
+        avaliado = (entidade.getAvaliado() == null) ? null : new UsuarioMinDTO(entidade.getAvaliado());
     }
 
     public Long getId() {
@@ -56,11 +64,11 @@ public class AvaliacaoDTO {
         return atualizadoEm;
     }
 
-    public UsuarioDTO getAvaliador() {
+    public UsuarioMinDTO getAvaliador() {
         return avaliador;
     }
 
-    public UsuarioDTO getAvaliado() {
+    public UsuarioMinDTO getAvaliado() {
         return avaliado;
     }
 }

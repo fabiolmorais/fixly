@@ -4,6 +4,7 @@ import com.projetomaisprati.fixly.entities.Avaliacao;
 import com.projetomaisprati.fixly.entities.Usuario;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PrestadorDTO {
@@ -13,12 +14,12 @@ public class PrestadorDTO {
     private String email;
     private String tipo;
     private Double avaliacaoMedia;
-    private List<ServicoDTO> servicos;
+    private Set<ServicoDTO> servicos;
 
     public PrestadorDTO() {
     }
 
-    public PrestadorDTO(Long id, String nome, String email, String tipo, Double avaliacaoMedia, List<ServicoDTO> servicos) {
+    public PrestadorDTO(Long id, String nome, String email, String tipo, Double avaliacaoMedia, Set<ServicoDTO> servicos) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -33,7 +34,7 @@ public class PrestadorDTO {
         email = entidade.getEmail();
         tipo = entidade.getTipo().toString();
         avaliacaoMedia = calcularAvaliacaoMedia(entidade.getAvaliacoesAvaliado());
-        servicos = entidade.getServicos().stream().map(ServicoDTO::new).collect(Collectors.toList());
+        servicos = entidade.getServicos().stream().map(ServicoDTO::new).collect(Collectors.toSet());
     }
 
     private Double calcularAvaliacaoMedia(List<Avaliacao> avaliacoes) {
@@ -63,7 +64,7 @@ public class PrestadorDTO {
         return avaliacaoMedia;
     }
 
-    public List<ServicoDTO> getServicos() {
+    public Set<ServicoDTO> getServicos() {
         return servicos;
     }
 }

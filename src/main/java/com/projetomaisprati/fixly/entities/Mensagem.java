@@ -17,6 +17,7 @@ public class Mensagem {
     private String anexoUrl;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant dataEnvio;
+    private Boolean lida;
 
     @ManyToOne
     @JoinColumn(name = "chat_id")
@@ -29,13 +30,14 @@ public class Mensagem {
     public Mensagem() {
     }
 
-    public Mensagem(Long id, String conteudo, String anexoUrl, Instant dataEnvio, Chat chat, Usuario remetente) {
+    public Mensagem(Long id, String conteudo, String anexoUrl, Instant dataEnvio, Chat chat, Usuario remetente, Boolean lida) {
         this.id = id;
         this.conteudo = conteudo;
         this.anexoUrl = anexoUrl;
         this.dataEnvio = dataEnvio;
         this.chat = chat;
         this.remetente = remetente;
+        this.lida = lida;
     }
 
     public Long getId() {
@@ -64,6 +66,14 @@ public class Mensagem {
 
     public Instant getDataEnvio() {
         return dataEnvio;
+    }
+
+    public Boolean getLida() {
+        return lida;
+    }
+
+    public void setLida(Boolean lida) {
+        this.lida = lida;
     }
 
     public void setDataEnvio(Instant dataEnvio) {

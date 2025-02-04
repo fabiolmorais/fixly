@@ -20,4 +20,7 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
     @Modifying
     @Query("UPDATE Endereco e SET e.principal = false WHERE e.usuario.id = :usuarioId AND e.principal = true")
     void desmarcarEnderecoPrincipalPorUsuario(@Param("usuarioId") Long usuarioId);
+
+    @Query("SELECT e FROM Endereco e JOIN FETCH e.usuario u WHERE e.cidade = :cidade")
+    Page<Endereco> findByCidadeTeste(String cidade, Pageable pageable);
 }
