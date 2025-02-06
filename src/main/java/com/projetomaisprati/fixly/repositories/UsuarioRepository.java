@@ -1,5 +1,6 @@
 package com.projetomaisprati.fixly.repositories;
 
+import com.projetomaisprati.fixly.entities.Servico;
 import com.projetomaisprati.fixly.entities.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

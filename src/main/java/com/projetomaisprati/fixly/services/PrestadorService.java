@@ -28,13 +28,11 @@ public class PrestadorService {
 
     @Transactional(readOnly = true)
     public PrestadorDetalhadoDTO findById(Long id) {
-        try {
-            Optional<Usuario> result = usuarioRepository.buscarUsuarioPorId(id);
-            Usuario usuario = result.get();
-            return new PrestadorDetalhadoDTO(usuario);
-        } catch (NoSuchElementException e) {
-            throw new ResourceNotFoundException("Id passado por parâmetro não corresponde ao Id de um Prestador");
-        }
+        Usuario result = usuarioRepository.buscarUsuarioPorId(id)
+                .orElseThrow(() -> new ResourceNotFoundException
+                        ("Id passado por parâmetro não corresponde ao Id de um Prestador"));
+        return new PrestadorDetalhadoDTO(result);
+
     }
 
 }
