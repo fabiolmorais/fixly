@@ -1,7 +1,6 @@
 package com.projetomaisprati.fixly.dto;
 
 import com.projetomaisprati.fixly.entities.Servico;
-import com.projetomaisprati.fixly.entities.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
