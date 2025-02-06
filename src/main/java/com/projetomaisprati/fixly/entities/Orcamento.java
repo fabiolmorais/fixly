@@ -34,13 +34,10 @@ public class Orcamento {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
-    @OneToOne(mappedBy = "orcamento", cascade = CascadeType.ALL)
-    private Chat chat;
-
     public Orcamento() {
     }
 
-    public Orcamento(Long id, String descricao, Double preco, LocalDate dataInicio, LocalDate dataFim, Instant dataCriacao, Status status, Usuario cliente, Usuario prestador, Endereco endereco, Chat chat) {
+    public Orcamento(Long id, String descricao, Double preco, LocalDate dataInicio, LocalDate dataFim, Instant dataCriacao, Status status, Usuario cliente, Usuario prestador, Endereco endereco) {
         this.id = id;
         this.descricao = descricao;
         this.preco = preco;
@@ -51,7 +48,6 @@ public class Orcamento {
         this.cliente = cliente;
         this.prestador = prestador;
         this.endereco = endereco;
-        this.chat = chat;
     }
 
     public Long getId() {
@@ -132,14 +128,6 @@ public class Orcamento {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
-    }
-
-    public Chat getChat() {
-        return chat;
-    }
-
-    public void setChat(Chat chat) {
-        this.chat = chat;
     }
 
     @Override

@@ -59,16 +59,16 @@ INSERT INTO tb_orcamento (descricao, preco, data_inicio, data_fim, data_criacao,
 INSERT INTO tb_orcamento (descricao, preco, data_inicio, data_fim, data_criacao, status, cliente_id, prestador_id, endereco_id) VALUES ('Limpeza de fachada', 450.0, '2023-09-05', '2023-09-10', TIMESTAMP WITH TIME ZONE '2023-08-25T16:00:00Z', 1, 3, 4, 10);
 
 -- INSERTS PARA tb_chat
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-01-06T12:00:00Z', 1, 2, 1);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-02-16T15:00:00Z', 4, 3, 2);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-03-01T09:00:00Z', 2, 5, 3);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-04-10T14:30:00Z', 1, 9, 4);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-05-05T08:15:00Z', 7, 7, 5);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-06-18T11:45:00Z', 6, 2, 6);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-07-12T10:00:00Z', 3, 5, 7);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-08-20T13:20:00Z', 9, 5, 8);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-09-01T18:00:00Z', 10, 3, 9);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id, orcamento_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-09-15T15:45:00Z', 8, 2, 10);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-01-06T12:00:00Z', 1, 2);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-02-16T15:00:00Z', 4, 3);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-03-01T09:00:00Z', 2, 5);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-04-10T14:30:00Z', 1, 9);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-05-05T08:15:00Z', 7, 7);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-06-18T11:45:00Z', 6, 2);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-07-12T10:00:00Z', 3, 5);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-08-20T13:20:00Z', 9, 5);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-09-01T18:00:00Z', 10, 3);
+INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-09-15T15:45:00Z', 8, 2);
 
 -- INSERTS PARA tb_avaliacao
 INSERT INTO tb_avaliacao (nota, comentario, criado_em, atualizado_em, avaliador_id, avaliado_id) VALUES (5, 'Excelente trabalho, recomendo muito!', TIMESTAMP WITH TIME ZONE '2023-01-20T14:00:00Z', TIMESTAMP WITH TIME ZONE '2023-01-22T10:00:00Z', 1, 2);

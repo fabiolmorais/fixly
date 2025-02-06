@@ -3,7 +3,6 @@ package com.projetomaisprati.fixly.entities;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,22 +25,17 @@ public class Chat {
     @JoinColumn(name = "prestador_id")
     private Usuario prestador;
 
-    @OneToOne
-    @MapsId
-    private Orcamento orcamento;
-
     @OneToMany(mappedBy = "chat")
     private List<Mensagem> mensagems = new ArrayList<>();
 
     public Chat() {
     }
 
-    public Chat(Long id, Instant dataCriacao, Usuario cliente, Usuario prestador, Orcamento orcamento) {
+    public Chat(Long id, Instant dataCriacao, Usuario cliente, Usuario prestador) {
         this.id = id;
         this.dataCriacao = dataCriacao;
         this.cliente = cliente;
         this.prestador = prestador;
-        this.orcamento = orcamento;
     }
 
     public Long getId() {
@@ -74,14 +68,6 @@ public class Chat {
 
     public void setPrestador(Usuario prestador) {
         this.prestador = prestador;
-    }
-
-    public Orcamento getOrcamento() {
-        return orcamento;
-    }
-
-    public void setOrcamento(Orcamento orcamento) {
-        this.orcamento = orcamento;
     }
 
     public List<Mensagem> getMensagems() {
