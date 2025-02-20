@@ -1,5 +1,7 @@
 package com.projetomaisprati.fixly.config;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -8,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,10 +28,14 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@SecurityScheme(name = ResourceServerConfig.SECURITY, type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
 public class ResourceServerConfig {
+
+	public static final String SECURITY = "bearerAuth";
 
 	@Value("${cors.origins}")
 	private String corsOrigins;
+
 
 	@Bean
 	@Profile("test")
@@ -45,7 +52,13 @@ public class ResourceServerConfig {
 	public SecurityFilterChain rsSecurityFilterChain(HttpSecurity http) throws Exception {
 
 		http.csrf(csrf -> csrf.disable());
-		http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+		http.authorizeHttpRequests(authorize -> authorize
+				.requestMatchers(
+						"/v3/api-docs/**",
+						"/swagger-ui/**",
+						"/swagger-ui.html"
+				).permitAll()
+				.anyRequest().permitAll());
 		http.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(Customizer.withDefaults()));
 		http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 		return http.build();
