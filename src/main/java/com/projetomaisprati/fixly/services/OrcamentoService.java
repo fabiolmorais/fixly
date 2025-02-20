@@ -26,22 +26,28 @@ public class OrcamentoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private AuthService authService;
+
     @Transactional(readOnly = true)
     public OrcamentoDTO findById(Long id) {
         Orcamento orcamento = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        authService.validateSelfOrAdminOrClient(orcamento.getCliente().getId(), orcamento.getPrestador().getId());
         return new OrcamentoDTO(orcamento);
     }
 
     @Transactional(readOnly = true)
     public Page<OrcamentoDTO> findQuotesByProvider(Long prestadorId, Pageable pageable) {
         Page<Orcamento> result = repository.buscarOrcamentoPorPrestador(prestadorId, pageable);
+        authService.validateSelfOrAdmin(prestadorId);
         return result.map(OrcamentoDTO::new);
     }
 
     @Transactional(readOnly = true)
     public Page<OrcamentoDTO> findQuotesByCustomer(Long clienteId, Pageable pageable) {
         Page<Orcamento> result = repository.buscarOrcamentoPorCliente(clienteId, pageable);
+        authService.validateSelfOrAdmin(clienteId);
         return result.map(OrcamentoDTO::new);
     }
 
@@ -58,6 +64,7 @@ public class OrcamentoService {
 
         Usuario prestador = new Usuario();
         prestador.setId(dto.getPrestador().getId());
+        authService.validateSelfOrAdmin(prestador.getId());
         orcamento.setPrestador(prestador);
 
         Usuario entidade = usuarioRepository.getReferenceById(dto.getCliente().getId());
@@ -72,6 +79,7 @@ public class OrcamentoService {
         try {
             Orcamento orcamento = repository.getReferenceById(id);
             copyDtoToEntity(dto, orcamento);
+            authService.validateSelfOrAdmin(orcamento.getPrestador().getId());
             orcamento = repository.save(orcamento);
             return new OrcamentoDTO(orcamento);
         } catch (EntityNotFoundException e) {

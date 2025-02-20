@@ -25,27 +25,27 @@ public class EnderecoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private AuthService authService;
+
     @Transactional(readOnly = true)
     public EnderecoDTO findById(Long id, Long usuarioId) {
         Endereco endereco = repository.findByIdAndUsuarioId(id, usuarioId).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        authService.validateSelfOrAdmin(usuarioId);
         return new EnderecoDTO(endereco);
     }
 
     @Transactional(readOnly = true)
     public Page<EnderecoDTO> findAdressByUser(Long usuarioId, Pageable pageable) {
         Page<Endereco> result = repository.findByUsuarioId(usuarioId, pageable);
+        authService.validateSelfOrAdmin(usuarioId);
         return result.map(EnderecoDTO::new); // igual isso -> result.map(x -> new EnderecoDTO(x));
-    }
-
-    @Transactional(readOnly = true)
-    public Page<EnderecoDTO> findAll(Pageable pageable) {
-        Page<Endereco> result = repository.findAll(pageable);
-        return result.map(x -> new EnderecoDTO(x));
     }
 
     @Transactional
     public EnderecoDTO insert(Long usuarioId, EnderecoDTO dto) {
         Usuario usuario = usuarioRepository.getReferenceById(usuarioId);
+        authService.validateSelfOrAdmin(usuarioId);
 
         if (dto.getPrincipal() == Boolean.TRUE) {
             desmarcarEnderecoPrincipal(usuarioId);
@@ -67,6 +67,7 @@ public class EnderecoService {
 
         try {
             Endereco entidade = repository.getReferenceById(id);
+            authService.validateSelfOrAdmin(entidade.getUsuario().getId());
             copyDtoToEntity(dto, entidade);
             entidade = repository.save(entidade);
             return new EnderecoDTO(entidade);
@@ -75,12 +76,14 @@ public class EnderecoService {
         }
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional
     public void delete(Long id) {
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException("Recurso não encontrado");
         }
         try {
+            Endereco entidade = repository.getReferenceById(id);
+            authService.validateSelfOrAdmin(entidade.getUsuario().getId());
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha de integridade referencial");

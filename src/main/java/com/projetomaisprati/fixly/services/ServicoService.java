@@ -22,6 +22,9 @@ public class ServicoService {
     @Autowired
     private ServicoRepository repository;
 
+    @Autowired
+    private AuthService authService;
+
     @Transactional(readOnly = true)
     public ServicoDTO findById (Long id) {
         Servico servico = repository.findById(id)
@@ -56,12 +59,14 @@ public class ServicoService {
         }
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional
     public void delete(Long id) {
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException("Recurso não encontrado");
         }
         try {
+            Servico entidade = repository.getReferenceById(id);
+            authService.validateSelfOrAdmin(entidade.getPrestador().getId());
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha de integridade referencial");
@@ -77,6 +82,7 @@ public class ServicoService {
 
         Usuario prestador = new Usuario();
         prestador.setId(dto.getPrestador().getId());
+        authService.validateSelfOrAdmin(prestador.getId());
         entidade.setPrestador(prestador);
 
         Categoria categoria = new Categoria();

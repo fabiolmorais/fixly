@@ -2,6 +2,7 @@ package com.projetomaisprati.fixly.controllers.handlers;
 
 import com.projetomaisprati.fixly.dto.CustomError;
 import com.projetomaisprati.fixly.dto.ValidationError;
+import com.projetomaisprati.fixly.services.exceptions.AccessDeniedException;
 import com.projetomaisprati.fixly.services.exceptions.DatabaseException;
 import com.projetomaisprati.fixly.services.exceptions.ForbiddenException;
 import com.projetomaisprati.fixly.services.exceptions.ResourceNotFoundException;
@@ -46,6 +47,13 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<CustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<CustomError> accessDenied(AccessDeniedException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.FORBIDDEN;
         CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);

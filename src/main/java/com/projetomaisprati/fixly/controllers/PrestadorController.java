@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ public class PrestadorController {
     @Autowired
     private PrestadorService prestadorService;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENTE', 'ROLE_PRESTADOR')")
     @GetMapping
     public ResponseEntity<Page<PrestadorDTO>> findUsersByAddress(
             @RequestParam(name = "cidade", defaultValue = "") String cidade,
@@ -24,6 +26,7 @@ public class PrestadorController {
         return ResponseEntity.ok(dto);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENTE', 'ROLE_PRESTADOR')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<PrestadorDetalhadoDTO> findById(@PathVariable Long id) {
         PrestadorDetalhadoDTO dto = prestadorService.findById(id);
