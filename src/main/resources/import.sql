@@ -23,7 +23,7 @@ INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Ricardo
 INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Bianca Carvalho', 'bianca@gmail.com', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 0, TIMESTAMP WITH TIME ZONE '2023-10-14T15:05:00Z');
 INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Fabio', 'fabio@gmail.com', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 2, TIMESTAMP WITH TIME ZONE '2023-10-14T15:05:00Z');
 
-INSERT INTO tb_role (authority) VALUES ('ROLE_CLIENTE');
+INSERT INTO tb_role (authority) VALUES ('ROLE_CONSUMIDOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_PRESTADOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 

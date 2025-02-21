@@ -4,9 +4,10 @@ import com.projetomaisprati.fixly.entities.TipoUsuario;
 import com.projetomaisprati.fixly.entities.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UsuarioDTO {
 
@@ -17,20 +18,18 @@ public class UsuarioDTO {
     @NotBlank(message = "Campo requerido")
     @NotEmpty(message = "Precisa digitar seu email")
     private String email;
-    @NotBlank(message = "Campo requerido")
-    @Size(min = 8, message = "Senha precisa ter no mínimo 8 caracteres")
-    private String senha;
     private TipoUsuario tipo;
     private Instant dataCriacao;
+
+    Set<RoleDTO> roles = new HashSet<>();
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String nome, String email, String senha, TipoUsuario tipo, Instant dataCriacao) {
+    public UsuarioDTO(Long id, String nome, String email, TipoUsuario tipo, Instant dataCriacao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
-        this.senha = senha;
         this.tipo = tipo;
         this.dataCriacao = dataCriacao;
     }
@@ -39,9 +38,9 @@ public class UsuarioDTO {
         id = entidade.getId();
         nome = entidade.getNome();
         email = entidade.getEmail();
-        senha = entidade.getSenha();
         tipo = entidade.getTipo();
         dataCriacao = entidade.getDataCriacao();
+        entidade.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
     }
 
     public Long getId() {
@@ -56,15 +55,15 @@ public class UsuarioDTO {
         return email;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
     public TipoUsuario getTipo() {
         return tipo;
     }
 
     public Instant getDataCriacao() {
         return dataCriacao;
+    }
+
+    public Set<RoleDTO> getRoles() {
+        return roles;
     }
 }

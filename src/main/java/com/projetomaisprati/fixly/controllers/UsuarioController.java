@@ -1,6 +1,7 @@
 package com.projetomaisprati.fixly.controllers;
 
 import com.projetomaisprati.fixly.dto.UsuarioDTO;
+import com.projetomaisprati.fixly.dto.UsuarioInsertDTO;
 import com.projetomaisprati.fixly.dto.UsuarioLogadoDTO;
 import com.projetomaisprati.fixly.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -81,11 +82,11 @@ public class UsuarioController {
             @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
-    public ResponseEntity<UsuarioDTO> insert(@Valid @RequestBody UsuarioDTO dto) {
-        dto = usuarioService.insert(dto);
+    public ResponseEntity<UsuarioDTO> insert(@Valid @RequestBody UsuarioInsertDTO dto) {
+        UsuarioDTO newDto = usuarioService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(uri).body(dto);
+                .buildAndExpand(newDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(newDto);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENTE', 'ROLE_PRESTADOR')")

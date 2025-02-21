@@ -1,10 +1,13 @@
 package com.projetomaisprati.fixly.services;
 
+import com.projetomaisprati.fixly.dto.RoleDTO;
 import com.projetomaisprati.fixly.dto.UsuarioDTO;
+import com.projetomaisprati.fixly.dto.UsuarioInsertDTO;
 import com.projetomaisprati.fixly.dto.UsuarioLogadoDTO;
 import com.projetomaisprati.fixly.entities.Role;
 import com.projetomaisprati.fixly.entities.Usuario;
 import com.projetomaisprati.fixly.projections.UserDetailsProjection;
+import com.projetomaisprati.fixly.repositories.RoleRepository;
 import com.projetomaisprati.fixly.repositories.UsuarioRepository;
 import com.projetomaisprati.fixly.services.exceptions.DatabaseException;
 import com.projetomaisprati.fixly.services.exceptions.ResourceNotFoundException;
@@ -17,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +32,9 @@ import java.util.List;
 public class UsuarioService implements UserDetailsService {
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
@@ -35,6 +42,9 @@ public class UsuarioService implements UserDetailsService {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
     public UsuarioDTO findById(Long id) {
@@ -49,10 +59,16 @@ public class UsuarioService implements UserDetailsService {
     }
 
     @Transactional
-    public UsuarioDTO insert(UsuarioDTO dto) {
+    public UsuarioDTO insert(UsuarioInsertDTO dto) {
         Usuario entidade = new Usuario();
         copyDtoToEntity(dto, entidade);
         entidade.setDataCriacao(Instant.now());
+        entidade.setSenha(passwordEncoder.encode(dto.getSenha()));
+
+        entidade.getRoles().clear();
+        Role role = roleRepository.searchByAuthority(dto.getTipo().name());
+        entidade.getRoles().add(role);
+
         entidade = usuarioRepository.save(entidade);
         return new UsuarioDTO(entidade);
     }
@@ -106,13 +122,14 @@ public class UsuarioService implements UserDetailsService {
     }
 
     private void copyDtoToEntity(UsuarioDTO dto, Usuario entidade) {
-
         entidade.setNome(dto.getNome());
         entidade.setEmail(dto.getEmail());
-
-        String senhaCrypto = new BCryptPasswordEncoder().encode(dto.getSenha());
-        entidade.setSenha(senhaCrypto);
-
         entidade.setTipo(dto.getTipo());
+
+        entidade.getRoles().clear();
+        for (RoleDTO roleDTO : dto.getRoles()) {
+            Role role = roleRepository.getReferenceById(roleDTO.getId());
+            entidade.getRoles().add(role);
+        }
     }
 }
