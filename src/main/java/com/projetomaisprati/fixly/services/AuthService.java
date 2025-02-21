@@ -11,24 +11,22 @@ public class AuthService {
     @Autowired
     private UsuarioAutenticado usuarioAutenticado;
 
-    public boolean validateSelfOrAdmin(Long userId) {
+    public void validateSelfOrAdmin(Long userId) {
         Usuario me = usuarioAutenticado.autenticated();
 
         if (!me.hasRole("ROLE_ADMIN") && !me.getId().equals(userId)) {
             throw new ForbiddenException("Access denied");
         }
-        return true;
     }
 
-    public boolean validateSelfOrAdminOrClient(Long clientId, Long providerId) {
+    public void validateSelfOrAdminOrClient(Long clientId, Long providerId) {
         Usuario me = usuarioAutenticado.autenticated();
 
         if (!me.hasRole("ROLE_ADMIN") && !me.getId().equals(clientId)) {
             if (!me.hasRole("ROLE_ADMIN") && me.getId().equals(providerId)) {
-                return true;
+                return;
             }
             throw new ForbiddenException("Access denied");
         }
-        return true;
     }
 }
