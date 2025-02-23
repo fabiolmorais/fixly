@@ -22,6 +22,7 @@ INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Juliana
 INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Ricardo Borges', 'ricardo@gmail.com', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 1, TIMESTAMP WITH TIME ZONE '2023-09-22T12:40:00Z');
 INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Bianca Carvalho', 'bianca@gmail.com', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 0, TIMESTAMP WITH TIME ZONE '2023-10-14T15:05:00Z');
 INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Fabio', 'fabio@gmail.com', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 2, TIMESTAMP WITH TIME ZONE '2023-10-14T15:05:00Z');
+INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Fabio Morais', 'fabio.lmorais99@gmail.com', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 2, TIMESTAMP WITH TIME ZONE '2023-10-14T15:05:00Z');
 
 INSERT INTO tb_role (authority) VALUES ('ROLE_CONSUMIDOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_PRESTADOR');
@@ -43,6 +44,7 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (9, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (9, 2);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (10, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (11, 3);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (12, 1);
 
 -- INSERTS PARA tb_servico
 INSERT INTO tb_servico (nome, descricao, preco_minimo, preco_maximo, categoria_id, prestador_id) VALUES ('Instalação de Fiação', 'Instalação completa de fiação elétrica residencial.', 150.0, 300.0, 1, 2);

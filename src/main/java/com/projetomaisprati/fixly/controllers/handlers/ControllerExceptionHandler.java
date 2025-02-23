@@ -2,10 +2,7 @@ package com.projetomaisprati.fixly.controllers.handlers;
 
 import com.projetomaisprati.fixly.dto.CustomError;
 import com.projetomaisprati.fixly.dto.ValidationError;
-import com.projetomaisprati.fixly.services.exceptions.AccessDeniedException;
-import com.projetomaisprati.fixly.services.exceptions.DatabaseException;
-import com.projetomaisprati.fixly.services.exceptions.ForbiddenException;
-import com.projetomaisprati.fixly.services.exceptions.ResourceNotFoundException;
+import com.projetomaisprati.fixly.services.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +52,13 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<CustomError> accessDenied(AccessDeniedException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.FORBIDDEN;
+        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<CustomError> email(EmailException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
         CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }

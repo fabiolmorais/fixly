@@ -2,6 +2,7 @@ package com.projetomaisprati.fixly.dto;
 
 import com.projetomaisprati.fixly.entities.TipoUsuario;
 import com.projetomaisprati.fixly.entities.Usuario;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -17,6 +18,7 @@ public class UsuarioDTO {
     private String nome;
     @NotBlank(message = "Campo requerido")
     @NotEmpty(message = "Precisa digitar seu email")
+    @Email(message = "Email inválido")
     private String email;
     private TipoUsuario tipo;
     private Instant dataCriacao;
