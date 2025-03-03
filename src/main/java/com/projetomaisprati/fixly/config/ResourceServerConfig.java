@@ -57,7 +57,8 @@ public class ResourceServerConfig {
 						"/swagger-ui/**",
 						"/swagger-ui.html"
 				).permitAll()
-				.anyRequest().permitAll());
+				.anyRequest().permitAll())
+				.oauth2Login(Customizer.withDefaults());
 		http.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(Customizer.withDefaults()));
 		http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 		return http.build();

@@ -25,7 +25,8 @@ public class Chat {
     @JoinColumn(name = "prestador_id")
     private Usuario prestador;
 
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER)
+    @OrderBy("dataCriacao DESC")
     private List<Mensagem> mensagems = new ArrayList<>();
 
     public Chat() {
