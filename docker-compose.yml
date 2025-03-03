@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14-alpine
+    container_name: fixly_postgres
+    environment:
+      POSTGRES_DB: fixly_db
+      POSTGRES_USER: fixly_user
+      POSTGRES_PASSWORD: fixly_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.data/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - dev-network
+
+  pgadmin-docker:
+    image: dpage/pgadmin4
+    container_name: fixly_backend
+    environment:
+      PGADMIN_DEFAULT_EMAIL: me@example.com
+      PGADMIN_DEFAULT_PASSWORD: 12345678
+    ports:
+      - "5050:80"
+    volumes:
+      - ./.data/pgadmin:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - dev-network
+
+networks:
+  dev-network:
+    driver: bridge
