@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -17,11 +18,15 @@ public class Usuario implements UserDetails {
     private String nome;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
+    private String cpfOuCnpj;
+    private LocalDate nascimento;
     private String senha;
     private TipoUsuario tipo;
     private Double avaliacaoMedia;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant dataCriacao;
+
 
     @OneToMany(mappedBy = "usuario")
     private Set<Endereco> enderecos = new HashSet<>();
@@ -59,10 +64,12 @@ public class Usuario implements UserDetails {
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String senha, TipoUsuario tipo, Instant dataCriacao) {
+    public Usuario(Long id, String nome, String email, String cpfOuCnpj, LocalDate nascimento, String senha, TipoUsuario tipo, Instant dataCriacao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.cpfOuCnpj = cpfOuCnpj;
+        this.nascimento = nascimento;
         this.senha = senha;
         this.tipo = tipo;
         this.dataCriacao = dataCriacao;
@@ -90,6 +97,22 @@ public class Usuario implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCpfOuCnpj() {
+        return cpfOuCnpj;
+    }
+
+    public void setCpfOuCnpj(String cpfOuCnpj) {
+        this.cpfOuCnpj = cpfOuCnpj;
+    }
+
+    public LocalDate getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
     }
 
     public String getSenha() {

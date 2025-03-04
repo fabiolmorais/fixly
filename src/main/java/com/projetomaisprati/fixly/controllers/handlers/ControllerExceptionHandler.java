@@ -4,6 +4,7 @@ import com.projetomaisprati.fixly.dto.CustomError;
 import com.projetomaisprati.fixly.dto.ValidationError;
 import com.projetomaisprati.fixly.services.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -60,6 +61,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<CustomError> email(EmailException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<CustomError> dataIntegrityViolation(DataIntegrityViolationException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        CustomError err = new CustomError(Instant.now(), status.value(), "Erro: O e-mail já está em uso. Escolha outro e-mail.", request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }

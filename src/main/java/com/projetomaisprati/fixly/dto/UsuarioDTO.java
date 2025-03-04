@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,8 @@ public class UsuarioDTO {
     @NotEmpty(message = "Precisa digitar seu email")
     @Email(message = "Email inválido")
     private String email;
+    private String cpfOuCnpj;
+    private LocalDate nascimento;
     private TipoUsuario tipo;
     private Instant dataCriacao;
 
@@ -28,10 +31,12 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String nome, String email, TipoUsuario tipo, Instant dataCriacao) {
+    public UsuarioDTO(Long id, String nome, String email, String cpfOuCnpj, LocalDate nascimento, TipoUsuario tipo, Instant dataCriacao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.cpfOuCnpj = cpfOuCnpj;
+        this.nascimento = nascimento;
         this.tipo = tipo;
         this.dataCriacao = dataCriacao;
     }
@@ -40,6 +45,8 @@ public class UsuarioDTO {
         id = entidade.getId();
         nome = entidade.getNome();
         email = entidade.getEmail();
+        cpfOuCnpj = entidade.getCpfOuCnpj();
+        nascimento = entidade.getNascimento();
         tipo = entidade.getTipo();
         dataCriacao = entidade.getDataCriacao();
         entidade.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
@@ -55,6 +62,14 @@ public class UsuarioDTO {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getCpfOuCnpj() {
+        return cpfOuCnpj;
+    }
+
+    public LocalDate getNascimento() {
+        return nascimento;
     }
 
     public TipoUsuario getTipo() {

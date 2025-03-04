@@ -124,6 +124,8 @@ public class UsuarioService implements UserDetailsService {
     private void copyDtoToEntity(UsuarioDTO dto, Usuario entidade) {
         entidade.setNome(dto.getNome());
         entidade.setEmail(dto.getEmail());
+        entidade.setCpfOuCnpj(dto.getCpfOuCnpj());
+        entidade.setNascimento(dto.getNascimento());
         entidade.setTipo(dto.getTipo());
 
         entidade.getRoles().clear();
