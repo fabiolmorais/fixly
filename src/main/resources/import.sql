@@ -24,7 +24,7 @@ INSERT INTO tb_usuario (nome, email, cpf_ou_cnpj, nascimento, senha, tipo, data_
 INSERT INTO tb_usuario (nome, email, cpf_ou_cnpj, nascimento, senha, tipo, data_criacao) VALUES ('Fabio', 'fabio@gmail.com', '357698214', '1999-01-01', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 2, TIMESTAMP WITH TIME ZONE '2023-10-14T15:05:00Z');
 INSERT INTO tb_usuario (nome, email, cpf_ou_cnpj, nascimento, senha, tipo, data_criacao) VALUES ('Fabio Morais', 'fabio.lmorais99@gmail.com', '357214698', '1999-01-01', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 2, TIMESTAMP WITH TIME ZONE '2023-10-14T15:05:00Z');
 
-INSERT INTO tb_role (authority) VALUES ('ROLE_CONSUMIDOR');
+INSERT INTO tb_role (authority) VALUES ('ROLE_CLIENTE');
 INSERT INTO tb_role (authority) VALUES ('ROLE_PRESTADOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 

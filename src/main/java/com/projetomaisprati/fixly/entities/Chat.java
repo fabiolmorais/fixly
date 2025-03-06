@@ -1,5 +1,6 @@
 package com.projetomaisprati.fixly.entities;
 
+import com.projetomaisprati.fixly.dto.ChatDTO;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -25,8 +26,7 @@ public class Chat {
     @JoinColumn(name = "prestador_id")
     private Usuario prestador;
 
-    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER)
-    @OrderBy("dataCriacao DESC")
+    @OneToMany(mappedBy = "chat")
     private List<Mensagem> mensagems = new ArrayList<>();
 
     public Chat() {
@@ -37,6 +37,10 @@ public class Chat {
         this.dataCriacao = dataCriacao;
         this.cliente = cliente;
         this.prestador = prestador;
+    }
+
+    public Chat(ChatDTO dto) {
+        id = dto.getId();
     }
 
     public Long getId() {

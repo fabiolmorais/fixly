@@ -1,5 +1,6 @@
 package com.projetomaisprati.fixly.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projetomaisprati.fixly.entities.TipoUsuario;
 import com.projetomaisprati.fixly.entities.Usuario;
 import jakarta.validation.constraints.Email;
@@ -22,6 +23,7 @@ public class UsuarioDTO {
     @Email(message = "Email inválido")
     private String email;
     private String cpfOuCnpj;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate nascimento;
     private TipoUsuario tipo;
     private Instant dataCriacao;

@@ -1,6 +1,5 @@
 package com.projetomaisprati.fixly.dto;
 
-import com.projetomaisprati.fixly.entities.TipoUsuario;
 import com.projetomaisprati.fixly.entities.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 

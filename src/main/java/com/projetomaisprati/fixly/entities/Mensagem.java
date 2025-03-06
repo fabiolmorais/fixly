@@ -1,5 +1,6 @@
 package com.projetomaisprati.fixly.entities;
 
+import com.projetomaisprati.fixly.dto.MensagensDTO;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -35,6 +36,16 @@ public class Mensagem {
         this.conteudo = conteudo;
         this.dataEnvio = dataEnvio;
         this.chat = chat;
+        this.remetente = remetente;
+        this.lida = lida;
+        this.tipo = tipo;
+    }
+
+    public Mensagem(MensagensDTO dto) {
+        this.id = dto.getId();
+        this.conteudo = dto.getConteudo();
+        this.dataEnvio = dto.getDataEnvio();
+        this.chat = (dto.getChat() == null) ? null : new Chat(dto.getChat());
         this.remetente = remetente;
         this.lida = lida;
         this.tipo = tipo;
