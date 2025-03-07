@@ -167,6 +167,10 @@ public class Usuario implements UserDetails {
         return enderecos;
     }
 
+    public void addEndereco(Endereco endereco) {
+        enderecos.add(endereco);
+    }
+
     public Set<Servico> getServicos() {
         return servicos;
     }

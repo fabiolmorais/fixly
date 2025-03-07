@@ -28,6 +28,8 @@ public class UsuarioDTO {
     private TipoUsuario tipo;
     private Instant dataCriacao;
 
+    private Set<EnderecoDTO> enderecos = new HashSet<>();
+
     Set<RoleDTO> roles = new HashSet<>();
 
     public UsuarioDTO() {
@@ -51,6 +53,7 @@ public class UsuarioDTO {
         nascimento = entidade.getNascimento();
         tipo = entidade.getTipo();
         dataCriacao = entidade.getDataCriacao();
+        entidade.getEnderecos().forEach(endereco -> this.enderecos.add(new EnderecoDTO(endereco)));
         entidade.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
     }
 
@@ -80,6 +83,10 @@ public class UsuarioDTO {
 
     public Instant getDataCriacao() {
         return dataCriacao;
+    }
+
+    public Set<EnderecoDTO> getEnderecos() {
+        return enderecos;
     }
 
     public Set<RoleDTO> getRoles() {
