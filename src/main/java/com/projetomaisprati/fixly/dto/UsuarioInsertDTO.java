@@ -9,7 +9,7 @@ import java.time.Instant;
 public class UsuarioInsertDTO  extends UsuarioDTO{
 
     @NotBlank(message = "Campo requerido")
-    @Size(min = 8, message = "Senha precisa ter no mínimo 8 caracteres")
+    @Size(min = 6, message = "Senha precisa ter no mínimo 6 caracteres")
     private String senha;
 
     public UsuarioInsertDTO() {
