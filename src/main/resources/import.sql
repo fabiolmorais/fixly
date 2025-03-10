@@ -24,7 +24,7 @@ INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Bianca 
 INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Fabio', 'fabio@gmail.com', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 2, TIMESTAMP WITH TIME ZONE '2023-10-14T15:05:00Z');
 INSERT INTO tb_usuario (nome, email, senha, tipo, data_criacao) VALUES ('Fabio Morais', 'fabio.lmorais99@gmail.com', '$2a$10$4/7LJISAoTP72cotjVqkOOmjnS2nQedRh.SOx4A/XjGhL76gui2P2', 2, TIMESTAMP WITH TIME ZONE '2023-10-14T15:05:00Z');
 
-INSERT INTO tb_role (authority) VALUES ('ROLE_CONSUMIDOR');
+INSERT INTO tb_role (authority) VALUES ('ROLE_CLIENTE');
 INSERT INTO tb_role (authority) VALUES ('ROLE_PRESTADOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 
@@ -83,16 +83,16 @@ INSERT INTO tb_orcamento (descricao, preco, data_inicio, data_fim, data_criacao,
 INSERT INTO tb_orcamento (descricao, preco, data_inicio, data_fim, data_criacao, status, cliente_id, prestador_id, endereco_id) VALUES ('Limpeza de fachada', 450.0, '2023-09-05', '2023-09-10', TIMESTAMP WITH TIME ZONE '2023-08-25T16:00:00Z', 1, 3, 2, 10);
 
 -- INSERTS PARA tb_chat
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-01-06T12:00:00Z', 1, 2);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-02-16T15:00:00Z', 4, 3);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-03-01T09:00:00Z', 2, 5);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-04-10T14:30:00Z', 1, 9);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-05-05T08:15:00Z', 7, 7);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-06-18T11:45:00Z', 6, 2);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-07-12T10:00:00Z', 3, 5);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-08-20T13:20:00Z', 9, 5);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-09-01T18:00:00Z', 10, 3);
-INSERT INTO tb_chat (data_criacao, cliente_id, prestador_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-09-15T15:45:00Z', 8, 2);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-01-06T12:00:00Z', TIMESTAMP WITH TIME ZONE '2023-01-06T12:00:00Z', 1, 2);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-02-16T15:00:00Z', TIMESTAMP WITH TIME ZONE '2023-02-16T15:00:00Z', 4, 3);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-03-01T09:00:00Z', TIMESTAMP WITH TIME ZONE '2023-03-01T09:00:00Z', 2, 5);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-04-10T14:30:00Z', TIMESTAMP WITH TIME ZONE '2023-04-10T14:30:00Z', 1, 9);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-05-05T08:15:00Z', TIMESTAMP WITH TIME ZONE '2023-05-05T08:15:00Z', 7, 7);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-06-18T11:45:00Z', TIMESTAMP WITH TIME ZONE '2023-06-18T11:45:00Z', 6, 2);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-07-12T10:00:00Z', TIMESTAMP WITH TIME ZONE '2023-07-12T10:00:00Z', 3, 5);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-08-20T13:20:00Z', TIMESTAMP WITH TIME ZONE '2023-08-20T13:20:00Z', 9, 5);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-09-01T18:00:00Z', TIMESTAMP WITH TIME ZONE '2023-09-01T18:00:00Z', 10, 3);
+INSERT INTO tb_chat (created_date, last_modified_date, sender_id, recipient_id) VALUES (TIMESTAMP WITH TIME ZONE '2023-09-15T15:45:00Z', TIMESTAMP WITH TIME ZONE '2023-09-15T15:45:00Z', 8, 2);
 
 -- INSERTS PARA tb_avaliacao
 INSERT INTO tb_avaliacao (nota, comentario, criado_em, atualizado_em, avaliador_id, avaliado_id) VALUES (5, 'Excelente trabalho, recomendo muito!', TIMESTAMP WITH TIME ZONE '2023-01-20T14:00:00Z', TIMESTAMP WITH TIME ZONE '2023-01-22T10:00:00Z', 1, 2);
@@ -107,13 +107,13 @@ INSERT INTO tb_avaliacao (nota, comentario, criado_em, atualizado_em, avaliador_
 INSERT INTO tb_avaliacao (nota, comentario, criado_em, atualizado_em, avaliador_id, avaliado_id) VALUES (4, 'Gostei do serviço, porém atrasou.', TIMESTAMP WITH TIME ZONE '2023-10-05T10:00:00Z', TIMESTAMP WITH TIME ZONE '2023-10-06T11:30:00Z', 5, 9);
 
 -- INSERTS PARA tb_mensagem
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Olá, poderia enviar mais detalhes sobre o serviço?', NULL, TIMESTAMP WITH TIME ZONE '2023-01-06T12:00:00Z', 1, 1);
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Claro, segue a descrição completa no arquivo.', 'https://exemplo.com/descricao.pdf', TIMESTAMP WITH TIME ZONE '2023-01-06T12:10:00Z', 1, 2);
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Bom dia, você atende no próximo final de semana?', NULL, TIMESTAMP WITH TIME ZONE '2023-02-16T15:00:00Z', 2, 4);
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Sim, estou disponível no sábado pela manhã.', NULL, TIMESTAMP WITH TIME ZONE '2023-02-16T15:10:00Z', 2, 3);
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Segue o orçamento para sua análise.', 'https://exemplo.com/orcamento.pdf', TIMESTAMP WITH TIME ZONE '2023-03-01T09:00:00Z', 3, 5);
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Recebido, irei revisar e te retorno.', NULL, TIMESTAMP WITH TIME ZONE '2023-03-01T09:15:00Z', 3, 2);
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Quando podemos marcar uma visita técnica?', NULL, TIMESTAMP WITH TIME ZONE '2023-04-10T14:00:00Z', 4, 1);
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Pode ser amanhã às 10h?', NULL, TIMESTAMP WITH TIME ZONE '2023-04-10T14:05:00Z', 4, 9);
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Enviei as fotos do local para análise.', 'https://exemplo.com/fotos-local.zip', TIMESTAMP WITH TIME ZONE '2023-05-05T08:30:00Z', 5, 7);
-INSERT INTO tb_mensagem (conteudo, anexo_url, data_envio, chat_id, remetente_id) VALUES ('Recebi as fotos, farei o orçamento.', NULL, TIMESTAMP WITH TIME ZONE '2023-05-05T08:40:00Z', 5, 6);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Olá, poderia enviar mais detalhes sobre o serviço?', 0, 0, TIMESTAMP WITH TIME ZONE '2023-01-06T12:00:00Z', TIMESTAMP WITH TIME ZONE '2023-01-06T12:00:00Z', 1, 1, 2);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Claro, segue a descrição completa no arquivo.', 1, 0, TIMESTAMP WITH TIME ZONE '2023-01-06T12:10:00Z', TIMESTAMP WITH TIME ZONE '2023-01-06T12:10:00Z', 1, 2, 1);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Bom dia, você atende no próximo final de semana?', 1, 0, TIMESTAMP WITH TIME ZONE '2023-02-16T15:00:00Z', TIMESTAMP WITH TIME ZONE '2023-02-16T15:00:00Z', 2, 4, 3);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Sim, estou disponível no sábado pela manhã.', 0, 0, TIMESTAMP WITH TIME ZONE '2023-02-16T15:10:00Z', TIMESTAMP WITH TIME ZONE '2023-02-16T15:10:00Z', 2, 3, 4);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Segue o orçamento para sua análise.', 1, 0, TIMESTAMP WITH TIME ZONE '2023-03-01T09:00:00Z', TIMESTAMP WITH TIME ZONE '2023-03-01T09:00:00Z', 3, 5, 6);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Recebido, irei revisar e te retorno.', 1, 0, TIMESTAMP WITH TIME ZONE '2023-03-01T09:15:00Z', TIMESTAMP WITH TIME ZONE '2023-03-01T09:15:00Z', 3, 6, 5);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Quando podemos marcar uma visita técnica?', 1, 0, TIMESTAMP WITH TIME ZONE '2023-04-10T14:00:00Z', TIMESTAMP WITH TIME ZONE '2023-04-10T14:00:00Z', 4, 7, 8);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Pode ser amanhã às 10h?', 0, 0, TIMESTAMP WITH TIME ZONE '2023-04-10T14:05:00Z', TIMESTAMP WITH TIME ZONE '2023-04-10T14:05:00Z', 4, 8, 7);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Enviei as fotos do local para análise.', 0, 0, TIMESTAMP WITH TIME ZONE '2023-05-05T08:30:00Z', TIMESTAMP WITH TIME ZONE '2023-05-05T08:30:00Z', 5, 10, 9);
+INSERT INTO tb_mensagem (conteudo, estado, tipo, created_date, last_modified_date, chat_id, sender_id, receiver_id) VALUES ('Recebi as fotos, farei o orçamento.', 0, 0, TIMESTAMP WITH TIME ZONE '2023-05-05T08:40:00Z', TIMESTAMP WITH TIME ZONE '2023-05-05T08:40:00Z', 5, 9, 10);
