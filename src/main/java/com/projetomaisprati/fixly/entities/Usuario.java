@@ -28,31 +28,31 @@ public class Usuario implements UserDetails {
     private Instant dataCriacao;
 
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Endereco> enderecos = new HashSet<>();
 
-    @OneToMany(mappedBy = "prestador")
+    @OneToMany(mappedBy = "prestador", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Servico> servicos = new HashSet<>();
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Orcamento> orcamentosCliente = new ArrayList<>();
 
-    @OneToMany(mappedBy = "prestador")
+    @OneToMany(mappedBy = "prestador", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Orcamento> orcamentosPrestador = new ArrayList<>();
 
-    @OneToMany(mappedBy = "avaliador")
+    @OneToMany(mappedBy = "avaliador", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Avaliacao> avaliacoesAvaliador = new ArrayList<>();
 
-    @OneToMany(mappedBy = "avaliado")
+    @OneToMany(mappedBy = "avaliado", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Avaliacao> avaliacoesAvaliado = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chat> chatsCliente = new ArrayList<>();
 
-    @OneToMany(mappedBy = "prestador")
+    @OneToMany(mappedBy = "prestador", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chat> chatsPrestador = new ArrayList<>();
 
-    @OneToMany(mappedBy = "remetente")
+    @OneToMany(mappedBy = "remetente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Mensagem> mensagems = new ArrayList<>();
 
     @ManyToMany
