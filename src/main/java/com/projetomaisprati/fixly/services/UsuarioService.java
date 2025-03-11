@@ -105,6 +105,11 @@ public class UsuarioService implements UserDetailsService {
             Usuario entidade = usuarioRepository.getReferenceById(id);
             authService.validateSelfOrAdmin(entidade.getId());
             copyDtoToEntity(dto, entidade);
+
+            entidade.getRoles().clear();
+            Role role = roleRepository.searchByAuthority(dto.getTipo().name());
+            entidade.getRoles().add(role);
+
             entidade = usuarioRepository.save(entidade);
             return new UsuarioDTO(entidade);
         } catch (EntityNotFoundException e) {

@@ -14,7 +14,6 @@ public class EnderecoDTO {
     @NotBlank(message = "Campo requerido")
     @NotEmpty(message = "Precisa ter o número da casa")
     private String numero;
-    @NotBlank(message = "Campo requerido")
     @Size(min = 2, message = "Nome do complemento precisa ter pelo menos 2 caracteres")
     private String complemento;
     @NotBlank(message = "Campo requerido")
