@@ -3,10 +3,10 @@ package com.projetomaisprati.fixly.services;
 import com.projetomaisprati.fixly.dto.ChatDTO;
 import com.projetomaisprati.fixly.entities.Chat;
 import com.projetomaisprati.fixly.entities.Usuario;
+import com.projetomaisprati.fixly.mapper.ChatMapper;
 import com.projetomaisprati.fixly.repositories.ChatRepository;
 import com.projetomaisprati.fixly.repositories.UsuarioRepository;
 import com.projetomaisprati.fixly.services.exceptions.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +29,7 @@ public class ChatService {
         final Long userId = currentUser.getId();
         return chatRepository.searchChatBySenderId(userId)
                 .stream()
-                .map(c -> mapper.toChatDTO(c, userId))
+                .map(chat -> mapper.toChatDTO(chat, userId))
                 .toList();
     }
 

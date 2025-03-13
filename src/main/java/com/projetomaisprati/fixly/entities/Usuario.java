@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -28,6 +29,9 @@ public class Usuario implements UserDetails {
     private String nome;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
+    private String cpfOuCnpj;
+    private LocalDate nascimento;
     private String senha;
     private TipoUsuario tipo;
     private Double avaliacaoMedia;
@@ -35,28 +39,28 @@ public class Usuario implements UserDetails {
     private Instant dataCriacao;
     private LocalDateTime lastSeen;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Endereco> enderecos = new HashSet<>();
 
-    @OneToMany(mappedBy = "prestador")
+    @OneToMany(mappedBy = "prestador", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Servico> servicos = new HashSet<>();
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Orcamento> orcamentosCliente = new ArrayList<>();
 
-    @OneToMany(mappedBy = "prestador")
+    @OneToMany(mappedBy = "prestador", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Orcamento> orcamentosPrestador = new ArrayList<>();
 
-    @OneToMany(mappedBy = "avaliador")
+    @OneToMany(mappedBy = "avaliador", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Avaliacao> avaliacoesAvaliador = new ArrayList<>();
 
-    @OneToMany(mappedBy = "avaliado")
+    @OneToMany(mappedBy = "avaliado", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Avaliacao> avaliacoesAvaliado = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chat> chatsAsSender;
 
-    @OneToMany(mappedBy = "recipient")
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chat> chatsAsRecipient;
 
     @ManyToMany
@@ -68,6 +72,10 @@ public class Usuario implements UserDetails {
     @Transient
     public boolean isUserOnline() {
         return lastSeen != null && lastSeen.isAfter(LocalDateTime.now().minusMinutes(LAST_ACTIVATE_INTERVAL));
+    }
+
+    public void addEndereco(Endereco endereco) {
+        enderecos.add(endereco);
     }
 
     public void addRole(Role role) {

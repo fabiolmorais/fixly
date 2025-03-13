@@ -4,9 +4,11 @@ import com.projetomaisprati.fixly.dto.RoleDTO;
 import com.projetomaisprati.fixly.dto.UsuarioDTO;
 import com.projetomaisprati.fixly.dto.UsuarioInsertDTO;
 import com.projetomaisprati.fixly.dto.UsuarioLogadoDTO;
+import com.projetomaisprati.fixly.entities.Endereco;
 import com.projetomaisprati.fixly.entities.Role;
 import com.projetomaisprati.fixly.entities.Usuario;
 import com.projetomaisprati.fixly.projections.UserDetailsProjection;
+import com.projetomaisprati.fixly.repositories.EnderecoRepository;
 import com.projetomaisprati.fixly.repositories.RoleRepository;
 import com.projetomaisprati.fixly.repositories.UsuarioRepository;
 import com.projetomaisprati.fixly.services.exceptions.DatabaseException;
@@ -27,6 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -45,6 +49,9 @@ public class UsuarioService implements UserDetailsService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     @Transactional(readOnly = true)
     public UsuarioDTO findById(Long id) {
@@ -69,6 +76,25 @@ public class UsuarioService implements UserDetailsService {
         Role role = roleRepository.searchByAuthority(dto.getTipo().name());
         entidade.getRoles().add(role);
 
+        Usuario finalEntidade = entidade;
+        Set<Endereco> enderecos = dto.getEnderecos().stream().map(
+                endDto -> {
+                    Endereco endereco = new Endereco();
+                    endereco.setLogradouro(endDto.getLogradouro());
+                    endereco.setNumero(endDto.getNumero());
+                    endereco.setComplemento(endDto.getComplemento());
+                    endereco.setBairro(endDto.getBairro());
+                    endereco.setCidade(endDto.getCidade());
+                    endereco.setEstado(endDto.getEstado());
+                    endereco.setCep(endDto.getCep());
+                    endereco.setPrincipal(true);
+                    endereco.setUsuario(finalEntidade);
+                    endereco = enderecoRepository.save(endereco);
+                    return endereco;
+                }).collect(Collectors.toSet());
+
+        entidade.addEndereco(enderecos.stream().findFirst().get());
+
         entidade = usuarioRepository.save(entidade);
         return new UsuarioDTO(entidade);
     }
@@ -79,6 +105,11 @@ public class UsuarioService implements UserDetailsService {
             Usuario entidade = usuarioRepository.getReferenceById(id);
             authService.validateSelfOrAdmin(entidade.getId());
             copyDtoToEntity(dto, entidade);
+
+            entidade.getRoles().clear();
+            Role role = roleRepository.searchByAuthority(dto.getTipo().name());
+            entidade.getRoles().add(role);
+
             entidade = usuarioRepository.save(entidade);
             return new UsuarioDTO(entidade);
         } catch (EntityNotFoundException e) {
@@ -124,6 +155,8 @@ public class UsuarioService implements UserDetailsService {
     private void copyDtoToEntity(UsuarioDTO dto, Usuario entidade) {
         entidade.setNome(dto.getNome());
         entidade.setEmail(dto.getEmail());
+        entidade.setCpfOuCnpj(dto.getCpfOuCnpj());
+        entidade.setNascimento(dto.getNascimento());
         entidade.setTipo(dto.getTipo());
 
         entidade.getRoles().clear();
